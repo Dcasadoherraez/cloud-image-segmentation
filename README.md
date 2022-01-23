@@ -72,34 +72,11 @@ Run inference on video:
 │   │   └── checkpoints
 │   │       └── deeplabv3_resnet50_coco-cd0a2569.pth
 │   └── trim-pyramid
-│       ├── 21_12_2021_08_04deeplabv3_resnet50_e16_of100.pth
-│       └── 21_12_2021_08_04deeplabv3_resnet50_e16_of100.zip
+│       └── 21_12_2021_08_04deeplabv3_resnet50_e16_of100.pth
 ├── README.md
 ├── src
 │   ├── config.py
-│   ├── dataset.py
-│   ├── infer_local.py
-│   ├── infer.py
-│   ├── labels.py
 │   ├── main.py
-│   ├── __pycache__
-│   │   ├── config.cpython-38.pyc
-│   │   ├── dataset.cpython-38.pyc
-│   │   ├── infer.cpython-38.pyc
-│   │   ├── infer_local.cpython-38.pyc
-│   │   ├── labels.cpython-38.pyc
-│   │   ├── show.cpython-38.pyc
-│   │   ├── tcp_client.cpython-38.pyc
-│   │   ├── tcp.cpython-38.pyc
-│   │   ├── tcp_server.cpython-38.pyc
-│   │   ├── train_local.cpython-38.pyc
-│   │   └── utils.cpython-38.pyc
-│   ├── show.py
-│   ├── tcp_client.py
-│   ├── tcp.py
-│   ├── tcp_server.py
-│   ├── train_local.py
-│   ├── train.py
-│   └── utils.py
+│   └── ...
 └── videoplayback.mp4
 ```
