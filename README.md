@@ -36,32 +36,32 @@ optional arguments:
 ```
 
 Run server:
-'''
+```
 ./docker_run.sh -s TRUE
-'''
+```
 
 Run client with display:
-'''
+```
 ./docker_run.sh -c1 -d1
-'''
+```
 
 Run client without display:
-'''
+```
 ./docker_run.sh -c1
-'''
+```
 
 Run local inference on image:
-'''
+```
 ./docker_run.sh -l1 -i image_test1.png
-'''
+```
 
 Run inference on video:
-'''
+```
 ./docker_run.sh -l1 -v video.mp4
-'''
+```
 
 ## Folder structure
-'''
+```
 ├── docker
 │   └── Dockerfile
 ├── docker_run.sh
@@ -102,4 +102,4 @@ Run inference on video:
 │   ├── train.py
 │   └── utils.py
 └── videoplayback.mp4
-'''
+```
