@@ -1,4 +1,5 @@
 # deep learning libraries
+import argparse
 from getopt import getopt
 import torch
 import torch.nn as nn 
@@ -14,7 +15,7 @@ import numpy as np
 
 # system libraries
 import sys
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentTypeError
 import gc
 import os
 import copy
@@ -22,32 +23,32 @@ from time import time
 
 # custom libraries
 from infer_local import *
-from infer_tcp import *
-from train_local import *
+# from train_local import *
 from tcp_client import *
 from tcp_server import *
 
 os.environ['TORCH_HOME'] = HOME_PATH
 os.environ["WANDB_RUN_GROUP"] = "image-seg"
 
-def is_valid_file(parser, arg):
-    if not os.path.exists(arg):
-        parser.error("The file %s does not exist!" % arg)
+def is_valid_file(arg):
+    print(arg)
+    if not os.path.exists(str(arg)):
+        raise argparse.ArgumentTypeError("{0} does not exist".format(arg))
     else:
         return arg
         
 def main(argv):
     parser = ArgumentParser()
     parser.add_argument("-t", dest="train", required=False,
-                    help="train", type=bool)
+                    help="train the network in this machine", type=bool)
     parser.add_argument("-l", dest="local", required=False,
-                    help="infer local", type=bool)
+                    help="infer in local machine", type=bool)
     parser.add_argument("-i", dest="image_file", required=False,
-                    help="input file with two matrices", metavar="IMAGE_PATH",
-                    type=lambda x: is_valid_file(parser, x))
+                    help="input image file for inference", metavar="IMAGE_PATH",
+                    type=is_valid_file)
     parser.add_argument("-v", dest="video_file", required=False,
-                    help="input file with two matrices", metavar="VIDEO_PATH", 
-                    type=lambda x: is_valid_file(parser, x))
+                    help="input video file for inference", metavar="VIDEO_PATH", 
+                    type=is_valid_file)
     parser.add_argument("-d", dest="display", required=False,
                     help="display the output result", type=bool)
     parser.add_argument("-s", dest="server", required=False,
@@ -62,11 +63,13 @@ def main(argv):
     elif args.train:
         print("Starting training module...")
         print("-- Using parameters from config.py --")
-        setup_and_train()
+        # setup_and_train()
     elif args.server:
         start_server()
     elif args.client:
-        start_client()
+        start_client(args)
+    else:
+        raise argparse.ArgumentTypeError("No valid arguments")
 
 
 if __name__ == "__main__": 

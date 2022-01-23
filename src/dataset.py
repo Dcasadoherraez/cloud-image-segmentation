@@ -12,7 +12,6 @@ from PIL import Image
 import math
 import numpy as np
 from tqdm import tqdm # progress bar
-import wandb
 
 # system libraries
 import sys
@@ -72,7 +71,7 @@ def get_mean_std(loader):
         num_batches += 1
         gc.collect()
         count += 1
-        if count == num_nom_batches:
+        if count == num_norm_batches:
             break
 
     mean = channels_sum/num_batches

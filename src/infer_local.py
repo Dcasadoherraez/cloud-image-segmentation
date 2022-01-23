@@ -1,5 +1,6 @@
 # deep learning libraries
 from getopt import getopt
+import imp
 import torch
 import torch.nn as nn 
 import torchvision 
@@ -25,6 +26,8 @@ from labels import *
 from show import *
 from infer import *
 from config import *
+from utils import *
+from tcp import *
 
 def infer_local(args):
     image_mode = False
@@ -34,7 +37,7 @@ def infer_local(args):
     if args.image_file:
         image_mode = True
         image_file = args.image_file
-        print("Video selected in ", image_file)
+        print("Image selected in ", image_file)
     elif args.video_file:
         video_mode = True
         video_file = args.video_file
@@ -51,7 +54,7 @@ def infer_local(args):
     model, device = load_model()
 
     if image_mode:
-        test_on_img("image_test2.png", model, device)
+        test_on_img(image_file, model, device)
         exit(0)
 
     if video_mode or tcp_client_mode: 

@@ -27,9 +27,10 @@ MODEL_PATH = './models/trim-pyramid/21_12_2021_08_04deeplabv3_resnet50_e16_of100
 
 # dataset transforms
 image_smaller_size = 520
+image_smaller_size = (250, 500) # if the GPU is low memory set smaller size
 data_transform = transforms.Compose([
-    transforms.Resize(image_smaller_size),
     transforms.ToTensor(),
+    transforms.Resize(image_smaller_size),
     transforms.Normalize(mean, std)
 ])
 target_transform = transforms.Compose([
@@ -37,7 +38,14 @@ target_transform = transforms.Compose([
     PILToTensor(),
 ])
 
+# display transform
+show_data_transform = transforms.Compose([
+    transforms.ToPILImage(),
+    transforms.Resize((250, 500)),
+    transforms.ToTensor(),
+])
+
 # client and server parameters
-client_connection = ('192.168.1.102', 5004)
-server_address = ('192.168.1.102', 5004)
+client_connection = ('192.168.1.40', 5004)
+server_connection = ('192.168.1.40', 5004)
 cam_device = '/dev/video0'
