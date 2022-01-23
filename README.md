@@ -20,6 +20,9 @@ from the video capturing step to the image segmentation.
 
 ## Usage
 
+### Training 
+
+### TCP Client/Server
 ```
 ./docker_run.sh [-h] [-t TRAIN] [-l LOCAL] [-i IMAGE_PATH] [-v VIDEO_PATH] [-d DISPLAY] [-s SERVER] [-c CLIENT]
 
@@ -37,7 +40,7 @@ optional arguments:
 
 Run server:
 ```
-./docker_run.sh -s TRUE
+./docker_run.sh -s1
 ```
 
 Run client with display:
@@ -49,6 +52,8 @@ Run client without display:
 ```
 ./docker_run.sh -c1
 ```
+
+### Local inference
 
 Run local inference on image:
 ```

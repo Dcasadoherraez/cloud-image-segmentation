@@ -55,6 +55,10 @@ def main(argv):
                     help="start TCP server", type=bool)
     parser.add_argument("-c", dest="client", required=False,
                     help="start TCP client", type=bool)
+    parser.add_argument("-njetson", dest="jetson", required=False,
+                    help="use Nvidia jetson nano as server", type=bool)
+    parser.add_argument("-cam", dest="use_cam", required=False,
+                    help="use computer camera", type=bool)
     args = parser.parse_args()
 
     if args.local:
