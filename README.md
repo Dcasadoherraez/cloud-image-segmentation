@@ -17,6 +17,7 @@ from the video capturing step to the image segmentation.
 ## Preparation
 1. Create docker image using Dockerfile (Check CUDA compatibility with your device. When using Jetson Nano, packages were manually installed instead of using Docker)
 2. chmod +rwx docker_run.sh
+3. Setup corresponding parameters in config.py
 
 ## Usage
 
