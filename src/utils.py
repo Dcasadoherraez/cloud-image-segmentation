@@ -1,23 +1,12 @@
 # deep learning libraries
+import cv2
 import torch
 import torch.nn as nn 
 import torchvision 
 from torchvision import transforms
-import cv2
-
-# image manipulation libraries
-from PIL import Image
 
 # utility libraries
 import numpy as np
-
-# system libraries
-import sys
-import gc
-import os
-import copy
-from time import time
-import gc
 
 # custom libraries
 from labels import *

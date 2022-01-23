@@ -1,10 +1,4 @@
 from threading import Thread
-import cv2
-from time import sleep
-import signal
-import sys
-import os
-
 from config import *
 from tcp import *
 

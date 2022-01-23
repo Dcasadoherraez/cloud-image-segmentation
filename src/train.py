@@ -1,26 +1,23 @@
 # deep learning libraries
+import cv2
 import torch
 import torch.nn as nn 
 import torchvision 
 from torchvision import transforms, io
 from torch.utils.data import Dataset, DataLoader
 import torch.nn.functional as F 
-import cv2
 
 # image manipulation libraries
 from PIL import Image
 
 # utility libraries
-import math
 import numpy as np
 from tqdm import tqdm # progress bar
 import wandb
 
 # system libraries
-import sys
 import gc
 import os
-import copy
 from datetime import datetime
 
 # custom libraries

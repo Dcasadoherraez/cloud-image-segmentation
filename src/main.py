@@ -1,28 +1,15 @@
-# deep learning libraries
-import argparse
-from getopt import getopt
-import torch
-import torch.nn as nn 
-import torchvision 
-from torchvision import transforms
-import cv2
-
-# image manipulation libraries
-from PIL import Image
-
 # utility libraries
 import numpy as np
 
 # system libraries
 import sys
 from argparse import ArgumentParser, ArgumentTypeError
-import gc
 import os
-import copy
 from time import time
 
 # custom libraries
 from infer_local import *
+
 # from train_local import *
 from tcp_client import *
 from tcp_server import *
@@ -33,7 +20,7 @@ os.environ["WANDB_RUN_GROUP"] = "image-seg"
 def is_valid_file(arg):
     print(arg)
     if not os.path.exists(str(arg)):
-        raise argparse.ArgumentTypeError("{0} does not exist".format(arg))
+        raise ArgumentTypeError("{0} does not exist".format(arg))
     else:
         return arg
         
@@ -73,7 +60,7 @@ def main(argv):
     elif args.client:
         start_client(args)
     else:
-        raise argparse.ArgumentTypeError("No valid arguments")
+        raise ArgumentTypeError("No valid arguments")
 
 
 if __name__ == "__main__": 

@@ -10,16 +10,9 @@ import torch.nn.functional as F
 from PIL import Image
 
 # utility libraries
-import math
 import numpy as np
 from tqdm import tqdm # progress bar
 import wandb
-
-# system libraries
-import sys
-import gc
-import os
-import copy
 
 # custom libraries
 from dataset import *

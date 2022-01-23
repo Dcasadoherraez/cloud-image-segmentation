@@ -1,5 +1,4 @@
 import sys
-from argparse import ArgumentParser
 
 from show import *
 from infer_local import *

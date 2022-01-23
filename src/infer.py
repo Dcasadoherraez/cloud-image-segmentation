@@ -1,10 +1,10 @@
 # Functions to perform inference 
 
 # deep learning libraries
+import cv2
 import torch
 import torch.nn as nn 
 import torchvision 
-import cv2
 
 # image manipulation libraries
 from PIL import Image

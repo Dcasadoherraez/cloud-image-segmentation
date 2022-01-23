@@ -1,11 +1,9 @@
 # deep learning libraries
-from getopt import getopt
-import imp
+import cv2
 import torch
 import torch.nn as nn 
 import torchvision 
 from torchvision import transforms
-import cv2
 
 # image manipulation libraries
 from PIL import Image

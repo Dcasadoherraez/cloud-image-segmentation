@@ -1,5 +1,4 @@
 # Functions for displaying results
-
 import cv2
 from config import *
 
