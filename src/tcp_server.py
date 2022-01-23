@@ -1,11 +1,3 @@
-# ==========================================================
-# video_pipeline.py
-# This tool was made for testing GStreamer on Ubuntu 20.04
-# webcam. The server thread creates the sending pipeline
-# while the client thread creates the reciving pipeline. 
-# Modify the device accordingly to your camera.
-# ==========================================================
-
 from threading import Thread
 import cv2
 from time import sleep
@@ -15,6 +7,18 @@ import os
 
 from config import *
 
+# stream a video file from the Jetson Nano
+def stream_video_file_from_jetson(filename):
+    
+    print("Streaming video file {} on {}:{}".format(filename, *server_connection))
+    # create TCP server pipeline to send H264 videos
+    launch_gstreamer = 'gst-launch-1.0 filesrc location={} do-timestamp=TRUE !  \
+                        qtdemux ! decodebin ! videoscale ! \
+                        nvvidconv ! videoconvert ! "video/x-raw,format=I420" ! \
+                        x264enc byte-stream=TRUE tune=zerolatency ! \
+                        "video/x-h264,alignment=au,stream-format=byte-stream" ! \
+                        rtph264pay ! rtpstreampay ! tcpserversink host={} port={}'.format(filename, *server_connection)
+    os.system(launch_gstreamer) 
 
 # stream a video file
 def stream_video_file(filename):
