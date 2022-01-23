@@ -6,7 +6,7 @@ from config import *
 # receive video from TCP server
 def get_tcp_video():
     # create TCP client pipeline to receive H264 videos
-    print("Getting TCP camera on {} port {}".format(*client_connection))
+    print("Getting TCP video on {} port {}".format(*client_connection))
     gst_str = 'tcpclientsrc host={} port={} do-timestamp=TRUE ! \
                 capsfilter caps="application/x-rtp-stream" ! rtpstreamdepay ! \
                 rtph264depay ! decodebin ! videoconvert ! \

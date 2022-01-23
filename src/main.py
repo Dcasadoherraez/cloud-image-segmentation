@@ -69,7 +69,7 @@ def main(argv):
         print("-- Using parameters from config.py --")
         # setup_and_train()
     elif args.server:
-        start_server()
+        start_server(args)
     elif args.client:
         start_client(args)
     else:

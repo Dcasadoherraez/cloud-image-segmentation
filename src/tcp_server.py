@@ -18,16 +18,18 @@ def start_server(args):
 
     # if using video file
     if args.video_file:
+        print("Streaming video ", args.video_file)
         if use_jetson:
             stream_video_file_from_jetson(args.video_file)
         else:
             stream_video_file(args.video_file)
     # if using camera
     elif args.use_cam:
+        print("Straming camera ", cam_device)
         if use_jetson:
             stream_video_file_from_jetson(args.video_file)
         else:
-            open_cam_pc(server_connection)
+            open_cam_pc()
     
     
     

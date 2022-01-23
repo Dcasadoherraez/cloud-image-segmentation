@@ -62,7 +62,11 @@ def infer_local(args):
         if video_mode:      
             cap = get_file_video(video_file) 
         elif tcp_client_mode:
-            cap = get_tcp_video()
+            if args.use_cam:
+                cap = open_cam_pc()
+            else:
+                cap = get_tcp_video()
+
         assert cap.isOpened() 
 
         if display:
