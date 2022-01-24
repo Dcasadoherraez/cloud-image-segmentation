@@ -1,0 +1,9 @@
+__pycache__
+cityscapes
+models
+wandb
+*.pth
+*.mp4
+*.jpg
+*.jpeg
+*.png
