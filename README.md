@@ -1,5 +1,3 @@
-# cloud-image-segmentation
-=======
 # FlowCloud: An Image Segmentation Pipeline for Edge Devices in the Cloud
 
 Image segmentation is a computer vision field that
