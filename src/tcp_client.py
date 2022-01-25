@@ -12,9 +12,9 @@ def start_client(args):
         
     print("[CLIENT] Connecting to {} port {}".format(*client_connection))
 
-    cap = get_tcp_video()
-    if not cap.isOpened():
-        sys.exit('Failed to open camera!')
+    # cap = get_tcp_video()
+    # if not cap.isOpened():
+    #     sys.exit('Failed to open camera!')
 
     infer_local(args)
 
