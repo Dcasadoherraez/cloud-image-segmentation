@@ -1,4 +1,10 @@
-from threading import Thread
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________tcp_server.py____________
+Initialize the TCP server for local inference
+'''
 from config import *
 from tcp import *
 

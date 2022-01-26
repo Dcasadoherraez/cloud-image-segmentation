@@ -1,23 +1,14 @@
-# Functions to perform inference 
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
 
+____________infer.py____________
+Complementary functions to infer_local.py to perform
+image segmentation.
+'''
 # deep learning libraries
 import cv2
 import torch
-import torch.nn as nn 
-import torchvision 
-
-# image manipulation libraries
-from PIL import Image
-
-# utility libraries
-import numpy as np
-
-# system libraries
-import sys
-import gc
-import os
-import copy
-from time import time
 
 # custom libraries
 from labels import *
@@ -25,6 +16,7 @@ from config import *
 from utils import *
 from show import *
 
+# load model from checkpoint into available device
 def load_model():
     model = get_pretrained_model()
 
@@ -46,16 +38,17 @@ def load_model():
 
     return model, device
 
-
+# get computer camera video
 def get_video_stream():
     return cv2.VideoCapture(0)
 
-
+# get video from file
 def get_file_video(filename):
     print('Opening video from file')
     stream = cv2.VideoCapture(filename) #create a opencv video stream.
     return stream
 
+# test image segmentation on an image
 def test_on_img(image_name, model, device):
     print("Testing on image")
     image = cv2.imread(image_name)
@@ -66,6 +59,7 @@ def test_on_img(image_name, model, device):
     cv2.imshow(WINDOW_NAME, res)
     cv2.waitKey(0)
 
+# show the memory allocation
 def show_memory_specs():
     t = torch.cuda.get_device_properties(0).total_memory
     r = torch.cuda.memory_reserved(0)
@@ -77,7 +71,7 @@ def show_memory_specs():
     print("Allocated memory: ", a)
     print("Free memory:      ", f)
 
-
+# get the number of parameters of the model
 def get_model_params(model):
     pp=0
     for p in list(model.parameters()):

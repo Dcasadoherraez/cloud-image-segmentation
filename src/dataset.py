@@ -1,25 +1,26 @@
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________dataset.py____________
+Class and functions for the Cityscapes dataset
+'''
+
 # deep learning libraries
 import torch
 import torch.nn as nn 
-import torchvision 
-from torch.utils.data import Dataset, DataLoader
-import torch.nn.functional as F 
+from torch.utils.data import Dataset
 
 # image manipulation libraries
-from PIL import Image
 
 # utility libraries
-import math
 import numpy as np
-from tqdm import tqdm # progress bar
 
 # system libraries
-import sys
 import gc
 import os
-import copy
 
-# Create custom pytorch dataset class
+# Custom pytorch dataset class
 class CityscapesCustom(Dataset):
     def __init__(self, root, image_base, mask_base, 
               split = 'train', mode = 'gtFine', target_type = 'labelIds'):
@@ -31,11 +32,13 @@ class CityscapesCustom(Dataset):
         self.target_type = target_type # "labelIds", "instanceIds", "color"
 
         self.image_list = []
+        # append all the image names 
         for i in os.listdir(os.path.join(self.image_base, self.split)):
             for image in os.listdir(os.path.join(self.image_base, self.split, i)):
                 self.image_list.append(os.path.join(self.image_base, self.split, i, image))
 
         self.mask_list = []
+        # append all the labelled ground truths
         for i in os.listdir(os.path.join(self.mask_base, self.split)):
             for mask in os.listdir(os.path.join(self.mask_base, self.split, i)):
                 self.mask_list.append(os.path.join(self.mask_base, self.split, i, mask))
@@ -50,8 +53,8 @@ class CityscapesCustom(Dataset):
  
         return img_path, mask_path
 
+ # transform mask to tensor with integer values corresponding to class IDs
 class PILToTensor:
-  # Transform mask to tensor with integer values corresponding to class IDs
     def __call__(self, target):
         target = torch.as_tensor(np.array(target), dtype=torch.int64)
         return target

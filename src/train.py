@@ -1,17 +1,18 @@
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________train.py____________
+Training functions and loop
+'''
 # deep learning libraries
 import cv2
 import torch
-import torch.nn as nn 
-import torchvision 
-from torchvision import transforms, io
-from torch.utils.data import Dataset, DataLoader
-import torch.nn.functional as F 
 
 # image manipulation libraries
 from PIL import Image
 
 # utility libraries
-import numpy as np
 from tqdm import tqdm # progress bar
 import wandb
 
@@ -24,6 +25,7 @@ from datetime import datetime
 from utils import *
 from config import *
 
+# load image batch from disk into torch.tensor
 def load_image_batch(image_names, label_names, labels_dict, 
                      data_transform=None, target_transform=None, 
                      one_hot = False):
@@ -55,14 +57,17 @@ def load_image_batch(image_names, label_names, labels_dict,
 
     return images.clone().detach(), masks.clone().detach()
 
+# save model
 def save_checkpoint(state_dict, path):
     torch.save(state_dict, path)
 
+# get latest saved model
 def get_latest_model(path):
     files = os.listdir(path)
     files.sort()
     return files[-1]
 
+# compare size of two tensors
 def compare_size(t1, t2):
     l1 = list(t1)
     l2 = list(t2)
@@ -76,6 +81,7 @@ def compare_size(t1, t2):
 
     return True
 
+# add weight decay for training
 def add_weight_decay(net, l2_value, skip_list=()):
     # https://raberrytv.wordpress.com/2017/10/29/pytorch-weight-decay-made-easy/
     # https://github.com/fregu856/deeplabv3/blob/master/utils/utils.py
@@ -90,7 +96,7 @@ def add_weight_decay(net, l2_value, skip_list=()):
 
     return [{'params': no_decay, 'weight_decay': 0.0}, {'params': decay, 'weight_decay': l2_value}]
 
-
+# get scored mask for wandb display 
 def score_frame(frame, model, device):
     t_frame = data_transform(frame)
     # print("New image shape is ", t_frame.shape)
@@ -102,7 +108,7 @@ def score_frame(frame, model, device):
     overlap = cv2.addWeighted(original,0.7,mask,0.8,0)
     return overlap
 
-
+# execute training and evaluation loop
 def train_eval(device, train_loader, val_loader,
                model, model_name, criterion, optimizer,
                scaler, num_epochs, batch_size, labels_dict,
@@ -123,7 +129,8 @@ def train_eval(device, train_loader, val_loader,
     for epoch in range(num_epochs):
         dir_name = datetime.now().strftime("%d_%m_%Y_%H_%M")
         print("Epoch: ", epoch)
-        # Each epoch has a training and validation phase
+
+        # each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
                 print("Training...")
@@ -139,7 +146,7 @@ def train_eval(device, train_loader, val_loader,
             val_loss_total = 0.0
             val_acc_total = 0.0
 
-            # Iterate over data
+            # iterate over data
             for i, (image_paths, label_paths) in enumerate(loop):
                 images, labels = load_image_batch(image_paths, label_paths, labels_dict, data_transform, target_transform, one_hot=False)
                 if not compare_size(images.size(), torch.Size([batch_size, num_channels, img_h, img_w])):

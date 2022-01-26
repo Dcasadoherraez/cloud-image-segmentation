@@ -1,22 +1,20 @@
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________infer_local.py____________
+Inference procedures in the local machine. Two possible cases:
+- Perform image segmentation from local resources (cam, video)
+- Be a client machine performing image segmentation in received data
+
+'''
 # deep learning libraries
 import cv2
-import torch
-import torch.nn as nn 
-import torchvision 
-from torchvision import transforms
-
-# image manipulation libraries
-from PIL import Image
 
 # utility libraries
 import numpy as np
 
 # system libraries
-import sys
-from argparse import ArgumentParser
-import gc
-import os
-import copy
 from time import time
 
 # custom libraries
@@ -27,7 +25,9 @@ from config import *
 from utils import *
 from tcp import *
 
+# perform inference in current machine
 def infer_local(args):
+    # initialize module modes
     image_mode = False
     video_mode = False
     tcp_client_mode = False
@@ -47,16 +47,17 @@ def infer_local(args):
     if args.display:
         display = True
 
-
     # Load pretrained model
     model, device = load_model()
 
     if image_mode:
+        # perform test on image
         test_on_img(image_file, model, device)
         exit(0)
 
     if video_mode or tcp_client_mode: 
-         
+         # video is being read from file or received via TCP
+
         if video_mode:      
             cap = get_file_video(video_file) 
         elif tcp_client_mode:
@@ -74,15 +75,15 @@ def infer_local(args):
         y_shape = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         print('Input shape is ' + str((x_shape, y_shape)))
         
-        while True: # Run until stream is out of frames
-            ret, frame = cap.read() # Read the first frame.
+        # run until stream is out of frames
+        while True: 
+            ret, frame = cap.read()
             if ret != True:
                 break
-            start_time = time() # We would like to measure the FPS.
-            results = score_frame_for_display(frame, model, device, display) # Score the Frame
+            start_time = time() 
+            results = score_frame_for_display(frame, model, device, display) 
             
-            
-            # Display results
+            # display results
             if display:
                 if cv2.getWindowProperty(WINDOW_NAME, 0) < 0:
                     print("Image could not be displayed")
@@ -97,5 +98,6 @@ def infer_local(args):
                 del results
 
             end_time = time()
-            fps = 1/np.round(end_time - start_time, 3) #Measure the FPS.
+            # measure the frames per second metric
+            fps = 1/np.round(end_time - start_time, 3) 
             print(f"Frames Per Second : {fps}")

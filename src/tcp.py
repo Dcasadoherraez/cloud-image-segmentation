@@ -1,3 +1,10 @@
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________tcp.py____________
+Functions to send/receive video on the TCP server
+'''
 import cv2
 import os
 

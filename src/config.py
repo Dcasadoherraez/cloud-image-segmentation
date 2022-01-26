@@ -1,3 +1,12 @@
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________config.py____________
+Runtime parameters that need to be setup
+manually.
+'''
+
 from torchvision import transforms
 from dataset import PILToTensor
 
@@ -41,11 +50,13 @@ target_transform = transforms.Compose([
 # display transform
 show_data_transform = transforms.Compose([
     transforms.ToPILImage(),
-    transforms.Resize((250, 500)),
+    transforms.Resize(image_smaller_size),
     transforms.ToTensor(),
 ])
 
 # client and server parameters
-client_connection = ('192.168.1.101', 5004)
-server_connection = ('192.168.1.40', 5004)
+client_connection = ('80.26.200.254', 5004)
+server_connection = ('192.168.1.102', 5004)
+
+# camera device
 cam_device = "/dev/video0"

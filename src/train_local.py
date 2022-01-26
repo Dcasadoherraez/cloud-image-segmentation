@@ -1,17 +1,16 @@
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________train_local.py____________
+Setup the dataset and train on the local machine
+'''
 # deep learning libraries
 import torch
 import torch.nn as nn 
-import torchvision 
-from torchvision import transforms, io
-from torch.utils.data import Dataset, DataLoader
-import torch.nn.functional as F 
-
-# image manipulation libraries
-from PIL import Image
 
 # utility libraries
 import numpy as np
-from tqdm import tqdm # progress bar
 import wandb
 
 # custom libraries
@@ -22,14 +21,16 @@ from config import *
 from train import *
 
 def setup_and_train():
-    print(torch.__version__)  
+    print('Using PyTorch', torch.__version__)
     wandb_obj = wandb.init(project="image-segmentation")
 
     # train parameters
     batch_size = 5
     num_epochs = 100
     num_channels = 3
+    learning_rate = 1e-4
 
+    # create instance of dataset classes
     train_dataset = CityscapesCustom(CITYSCAPES_PATH, IMAGES_PATH, MASKS_PATH, 
                                     split = 'train', 
                                     mode = 'gtFine', 
@@ -40,18 +41,19 @@ def setup_and_train():
                                     mode = 'gtFine', 
                                     target_type = 'labelIds')
 
+    # load train and val data
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = torch.utils.data.DataLoader(dataset=val_dataset, batch_size=batch_size, shuffle=True)
 
-    # show sample images to get sizes
+    # sample images to get sizes
     examples = iter(train_loader)
     example_data, example_targets = examples.next()
     show_img, show_mask = load_image_batch(example_data[0:2], example_targets[0:2], labels_dict, data_transform, target_transform, one_hot=False)
     size = show_img.size()
 
-    # Hyperparameters  
-    learning_rate = 1e-4
+    # select device
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    
     # batch_size defined earlier    
     img_h = size[2]
     img_w = size[3]
@@ -69,6 +71,7 @@ def setup_and_train():
     # # loss function
     # loss_fn = nn.CrossEntropyLoss(weight=class_weights)
 
+    # GradScaler for fp16 training
     scaler = torch.cuda.amp.GradScaler()    
     criterion = nn.CrossEntropyLoss()
 

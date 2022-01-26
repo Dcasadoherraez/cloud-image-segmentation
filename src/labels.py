@@ -1,7 +1,11 @@
-# https://github.com/mcordts/cityscapesScripts/blob/master/cityscapesscripts/helpers/labels.py
-#
-# Cityscapes labels
-#
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________labels.py____________
+Cityscapes dataset labels and quick functions
+Source: https://github.com/mcordts/cityscapesScripts/blob/master/cityscapesscripts/helpers/labels.py
+'''
 from __future__ import print_function, absolute_import, division
 from collections import namedtuple
 
@@ -72,20 +76,3 @@ labels_dict = [
 color2label     = { label.color   : label for label in labels_dict}
 # id to label object
 id2color        = { label.id      : label.color for label in labels_dict}
-
-def class_to_color(image):
-  # image size: (1 x H x W)
-  # output size: (H x W x 3)
-  if type(image) is not np.ndarray:
-    raise Exception("The input is not valid numpy array")
-  id_list = [x.id for x in labels]
-  color_list = [x.color for x in labels]
-  result = torch.zeros((image.shape[0], image.shape[1], 3))
-    
-  for y in range(image.shape[0]):
-    for x in range(image.shape[1]):
-      if image[y, x].item() in id_list:
-        result[y, x, :] = torch.Tensor(id2color[image[y, x].item()])
-      else:
-        result[y, x, :] = torch.Tensor([0, 0, 0])
-  return result

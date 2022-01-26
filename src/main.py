@@ -1,3 +1,26 @@
+'''
+part of: cloud-image-segmentation
+by: Daniel Casado Herraez
+
+____________main.py____________
+Manages command calls to the cloud-image-segmentation package
+
+main.py [-h] [-t TRAIN] [-l LOCAL] [-i IMAGE_PATH] [-v VIDEO_PATH] [-d DISPLAY] [-s SERVER]
+               [-c CLIENT] [-njetson JETSON] [-cam USE_CAM]
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -t TRAIN         train the network in this machine
+  -l LOCAL         infer in local machine
+  -i IMAGE_PATH    input image file for inference
+  -v VIDEO_PATH    input video file for inference
+  -d DISPLAY       display the output result
+  -s SERVER        start TCP server
+  -c CLIENT        start TCP client
+  -njetson JETSON  use Nvidia jetson nano as server
+  -cam USE_CAM     use computer camera
+'''
+
 # utility libraries
 import numpy as np
 
@@ -5,25 +28,19 @@ import numpy as np
 import sys
 from argparse import ArgumentParser, ArgumentTypeError
 import os
-from time import time
 
 # custom libraries
 from infer_local import *
-
-# from train_local import *
+from utils import *
 from tcp_client import *
 from tcp_server import *
 
+# set environment variables
 os.environ['TORCH_HOME'] = HOME_PATH
 os.environ["WANDB_RUN_GROUP"] = "image-seg"
 
-def is_valid_file(arg):
-    print(arg)
-    if not os.path.exists(str(arg)):
-        raise ArgumentTypeError("{0} does not exist".format(arg))
-    else:
-        return arg
         
+# main function        
 def main(argv):
     parser = ArgumentParser()
     parser.add_argument("-t", dest="train", required=False,
@@ -62,6 +79,6 @@ def main(argv):
     else:
         raise ArgumentTypeError("No valid arguments")
 
-
+# main call
 if __name__ == "__main__": 
     main(sys.argv[1:])
