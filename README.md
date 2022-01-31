@@ -21,7 +21,7 @@ The pipeline structure is the following:
 
 Some sample results of the image segmentation network:
 
-![](https://github.com/Dcasadoherraez/cloud-image-segmentation/blob/main/media/results1.png) | ![](https://github.com/Dcasadoherraez/cloud-image-segmentation/blob/main/media/results2.png)
+| ![](https://github.com/Dcasadoherraez/cloud-image-segmentation/blob/main/media/results1.png)  | ![](https://github.com/Dcasadoherraez/cloud-image-segmentation/blob/main/media/results2.png)  |
 
 ## Preparation
 1. Create docker image using Dockerfile (Check CUDA compatibility with your device. When using Jetson Nano, packages were manually installed instead of using Docker)
