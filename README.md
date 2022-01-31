@@ -14,6 +14,13 @@ GPU-capable machine and transmitting the encoded video via a
 TCP client-server network. The data flow pipeline is presented
 from the video capturing step to the image segmentation.
 
+The pipeline structure is the following:
+![Structure of the pipeline](https://github.com/Dcasadoherraez/cloud-image-segmentation/blob/main/media/pipeline.png)
+
+Some sample results
+![Results 1](https://github.com/Dcasadoherraez/cloud-image-segmentation/blob/main/media/results1.png)
+![Results 2](https://github.com/Dcasadoherraez/cloud-image-segmentation/blob/main/media/results2.png)
+
 ## Preparation
 1. Create docker image using Dockerfile (Check CUDA compatibility with your device. When using Jetson Nano, packages were manually installed instead of using Docker)
 2. chmod +rwx docker_run.sh
