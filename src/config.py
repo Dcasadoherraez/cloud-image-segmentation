@@ -55,8 +55,8 @@ show_data_transform = transforms.Compose([
 ])
 
 # client and server parameters
-client_connection = ('80.26.200.254', 5004)
-server_connection = ('192.168.1.40', 5005)
+client_connection = ('localhost', 5004)
+server_connection = ('localhost', 5005)
 
 # camera device
 cam_device = "/dev/video0"
